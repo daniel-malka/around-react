@@ -15,15 +15,22 @@ function Main({
   React.useEffect(() => {
     api
       .getUserInfo()
-      .then(([cardData, userData]) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-        setCards(cardData);
+      .then((res) => {
+        setUserName(res.name);
+        setUserDescription(res.about);
+        setUserAvatar(res.avatar);
       })
       .catch((err) => console.log(err));
   }, []);
 
+  React.useEffect(() => {
+    api
+      .getCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch(console.log());
+  });
   return (
     <main className="content">
       <section className="top">
@@ -54,7 +61,9 @@ function Main({
       <section className="images">
         <ul className="gallery">
           {cards.map((card) => {
-            <Card key={card._id} card={card} onCardClick={onCardClick} />;
+            return (
+              <Card key={card._id} card={card} onCardClick={onCardClick} />
+            );
           })}
         </ul>
       </section>

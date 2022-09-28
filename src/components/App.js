@@ -38,7 +38,7 @@ function App() {
     setEditAvatar(false);
     setIsImgViewOpen(false);
   }
-  
+
   return (
     <div className="page">
       <Header />
