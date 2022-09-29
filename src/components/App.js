@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -6,9 +6,9 @@ import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 
 function App() {
-  const [isEditProfileOpen, setEditProfile] = React.useState(false);
-  const [isAddCardOpen, setAddCard] = React.useState(false);
-  const [isEditAvatarOpen, setEditAvatar] = React.useState(false);
+  const [isEditProfileOpen, setIsEditProfileOpen] = React.useState(false);
+  const [isAddCardOpen, setIsAddCardOpen] = React.useState(false);
+  const [isEditAvatarOpen, setIsEditAvatarOpen] = React.useState(false);
   const [isImgViewOpen, setIsImgViewOpen] = useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
     name: "",
@@ -16,15 +16,15 @@ function App() {
   });
 
   function handleEditProfileClick() {
-    setEditProfile(true);
+    setIsEditProfileOpen(true);
   }
 
   function handleAddCardClick() {
-    setAddCard(true);
+    setIsAddCardOpen(true);
   }
 
   function handleEditAvatarClick() {
-    setEditAvatar(true);
+    setIsEditAvatarOpen(true);
   }
 
   function handleCardClick(card) {
@@ -33,9 +33,9 @@ function App() {
   }
 
   function closeAll() {
-    setEditProfile(false);
-    setAddCard(false);
-    setEditAvatar(false);
+    setIsEditProfileOpen(false);
+    setIsAddCardOpen(false);
+    setIsEditAvatarOpen(false);
     setIsImgViewOpen(false);
   }
 

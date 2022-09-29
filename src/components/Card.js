@@ -1,8 +1,8 @@
 import Recat from "react";
 
-function Card({ card, oonCardClick }) {
+function Card({ card, onCardClick }) {
   function handleClick() {
-    oonCardClick(card);
+    onCardClick(card);
   }
 
   return (

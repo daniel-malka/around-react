@@ -43,7 +43,8 @@
 }
 .like__counter {
   position: absolute;
-  left: 5px;
+  top: 6px;
+  left: 6px;
   width: 12px;
   height: 12px;
   color: black;
