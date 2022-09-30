@@ -5,9 +5,9 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 
-import "./blocks/page.css";
+import "../blocks/page.css";
 
-import "./blocks/content.css";
+import "../blocks/content.css";
 
 function App() {
   const [isEditProfileOpen, setIsEditProfileOpen] = React.useState(false);
