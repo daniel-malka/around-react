@@ -1,6 +1,10 @@
 import React from "react";
 import api from "../utils/Api";
 import Card from "./Card";
+
+import "../blocks/images.css";
+import "../blocks/gallery.css";
+import "../blocks/zoom.css";
 function Main({
   onEditProfileClick,
   onCardClick,

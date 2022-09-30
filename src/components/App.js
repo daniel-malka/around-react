@@ -6,8 +6,17 @@ import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 
 import "../blocks/page.css";
+import "../blocks/popup.css";
 
+import "../blocks/desc.css";
+import "../blocks/top.css";
+import "../blocks/text.css";
+
+import "../blocks/header.css";
 import "../blocks/content.css";
+
+import "../blocks/form.css";
+import "../blocks/footer.css";
 
 function App() {
   const [isEditProfileOpen, setIsEditProfileOpen] = React.useState(false);
