@@ -1,9 +1,7 @@
 const customFetch = (url, headers) => {
-  return fetch(url, headers)
-    .then((res) => (res.ok ? res.json() : Promise.reject(res.statusText)))
-    .catch((err) => {
-      console.log(err);
-    });
+  return fetch(url, headers).then((res) =>
+    res.ok ? res.json() : Promise.reject(res.statusText)
+  );
 };
 
 class Api {

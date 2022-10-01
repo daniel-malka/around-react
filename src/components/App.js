@@ -42,7 +42,10 @@ function App() {
 
   function handleCardClick(card) {
     setIsImgViewOpen(true);
-    setSelectedCard({ name: card.name, link: card.link });
+    setSelectedCard({
+      name: card.name,
+      link: card.link,
+    });
   }
 
   function closeAll() {
@@ -102,7 +105,7 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm
-        title="NewPlace"
+        title="New Place"
         name="img-add"
         isOpen={isAddCardOpen}
         onClose={closeAll}

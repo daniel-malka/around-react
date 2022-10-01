@@ -17,7 +17,7 @@ function PopupWithImage(props) {
           />
         </button>
         <figure>
-          <img src={props.link} alt="#" className="popup__image" />
+          <img src={props.card.link} alt="#" className="popup__image" />
           <figcaption className="popup__caption">{props.name}</figcaption>
         </figure>
       </div>
