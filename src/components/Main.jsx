@@ -4,7 +4,7 @@ import Card from "./Card";
 
 import "../blocks/images.css";
 import "../blocks/gallery.css";
-import "../blocks/zoom.css";
+
 function Main({
   onEditProfileClick,
   onCardClick,
@@ -33,8 +33,8 @@ function Main({
       .then((res) => {
         setCards(res);
       })
-      .catch(console.log());
-  });
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <main className="content">
       <section className="top">
