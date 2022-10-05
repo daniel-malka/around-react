@@ -1,4 +1,5 @@
 import close from "../images/close-X.svg";
+import "../blocks/popup.css";
 function PopupWithImage(props) {
   return (
     <div
@@ -12,7 +13,7 @@ function PopupWithImage(props) {
           <img
             src={close}
             alt="close icon x"
-            className="popup__close-icon popup__close-icon_image"
+            className="popup__close popup__close-icon_image"
             onClick={props.onClose}
           />
         </button>

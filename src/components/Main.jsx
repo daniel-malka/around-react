@@ -3,6 +3,7 @@ import api from "../utils/Api";
 import Card from "./Card";
 
 import "../blocks/images.css";
+import "../blocks/popup.css";
 import "../blocks/gallery.css";
 import "../blocks/zoom.css";
 function Main({
