@@ -40,8 +40,8 @@
   background-image: none;
   background-position: top;
   background-repeat: no-repeat;
-  width: 830px;
-  height: 540px;
+  width: 70vw;
+  height: 70vh;
   object-fit: cover;
   box-sizing: border-box;
 }

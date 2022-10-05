@@ -7,6 +7,7 @@ import PopupWithImage from "./PopupWithImage";
 
 import "../blocks/page.css";
 import "../blocks/popup.css";
+import "../blocks/zoom.css";
 
 import "../blocks/desc.css";
 import "../blocks/top.css";
@@ -48,7 +49,7 @@ function App() {
     });
   }
 
-  function closeAll() {
+  function closeAllPopups() {
     setIsEditProfileOpen(false);
     setIsAddCardOpen(false);
     setIsEditAvatarOpen(false);
@@ -70,7 +71,7 @@ function App() {
         title="Edit Profile"
         name="edit"
         isOpen={isEditProfileOpen}
-        onClose={closeAll}
+        onClose={closeAllPopups}
       >
         <fieldset className="fieldset">
           <div className="fieldset__container">
@@ -108,7 +109,7 @@ function App() {
         title="New Place"
         name="img-add"
         isOpen={isAddCardOpen}
-        onClose={closeAll}
+        onClose={closeAllPopups}
       >
         <fieldset className="fieldset">
           <div className="fieldset__container">
@@ -142,7 +143,7 @@ function App() {
 
       <PopupWithForm
         title="Are you sure?"
-        onClose={closeAll}
+        onClose={closeAllPopups}
         name="delete"
         buttonText="Delete"
       />
@@ -152,7 +153,7 @@ function App() {
         name="avatar"
         buttonText="Create"
         isOpen={isEditAvatarOpen}
-        onClose={closeAll}
+        onClose={closeAllPopups}
       >
         <fieldset className="fieldset">
           <div className="fieldset__container">
@@ -173,7 +174,7 @@ function App() {
       <PopupWithImage
         card={selectedCard}
         isOpen={isImgViewOpen}
-        onClose={closeAll}
+        onClose={closeAllPopups}
       />
     </div>
   );
