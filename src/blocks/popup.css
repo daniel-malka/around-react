@@ -62,7 +62,15 @@
   cursor: pointer;
   opacity: 0.6;
 }
-
+.popup__title {
+  margin: 0;
+  margin-top: 10px;
+  color: white;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: left;
+}
 .popup__caption {
   margin: 0;
   margin-top: 10px;
