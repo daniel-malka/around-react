@@ -1,10 +1,4 @@
-#root {
-  background-color: #000000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+
 .page {
   box-sizing: border-box;
   max-width: 1280px;

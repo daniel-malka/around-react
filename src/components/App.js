@@ -4,7 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
-
+import "../blocks/root.css";
 import "../blocks/page.css";
 import "../blocks/popup.css";
 import "../blocks/zoom.css";
