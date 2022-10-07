@@ -34,7 +34,7 @@ function Main({
       .then((res) => {
         setCards(res);
       })
-      .catch(console.log());
+      .catch((err) => console.log(err));
   });
   return (
     <main className="content">

@@ -79,6 +79,7 @@
 .popup__caption {
   margin: 0;
   margin-top: 10px;
+  margin-bottom: 10px;
   color: black;
   font-size: 24px;
   font-weight: 900;

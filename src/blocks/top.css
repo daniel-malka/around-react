@@ -5,38 +5,38 @@
   display: flex;
   max-width: 880px;
 }
+
 .top__container {
-  position: relative;
-}
-.top__img {
-  position: relative;
-  border-radius: 50%;
   width: 120px;
   height: 120px;
+  position: relative;
+  margin-right: 16px;
+}
+
+.top__img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
   margin-right: 30px;
 }
-.top__img:hover {
-  opacity: 0.6;
-  cursor: pointer;
-}
-.top__img::after {
+
+.top__container::after {
+  content: "";
   opacity: 0;
-  height: 120px;
   position: absolute;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
-  z-index: 13;
-  background-color: rgba(0, 0, 0, 0.6);
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 120px;
+  background: rgba(0, 0, 0, 0.8) url("../images/pen.svg") no-repeat center;
+  background-size: 26px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 50%;
 }
-.top__img:hover::after {
-  opacity: 1;
-  background-image: url("../images/pen.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 20px;
+
+.top__container:hover::after {
+  opacity: 0.6;
 }
 
 .top__plus-box {

@@ -17,7 +17,7 @@ function PopupWithForm({
           onClick={onClose}
         ></button>
         <h3 className="popup__caption">{title}</h3>
-        <form className="form" name="name" noValidate>
+        <form className="form" name="name">
           {children}
           <button
             type="submit"
