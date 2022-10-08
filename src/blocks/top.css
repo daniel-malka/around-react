@@ -64,12 +64,22 @@
   }
 }
 
-@media screen and (max-width: 775px) {
+@media screen and (max-width: 875px) {
+  .top {
+    padding-left: 30px;
+  }
+
   .top__plus-box {
     width: 50px;
     height: 100px;
   }
 }
+
+/* @media screen and (max-width: 835px) {
+  .top {
+    padding-left: 80px;
+  }
+} */
 @media screen and (max-width: 620px) {
   .top {
     margin-bottom: 0;

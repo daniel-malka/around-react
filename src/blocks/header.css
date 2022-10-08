@@ -1,6 +1,6 @@
 .header {
   box-sizing: border-box;
-  width: 880px;
+  max-width: 880px;
   display: flex;
   margin-bottom: 40px;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
@@ -14,6 +14,12 @@
 @media screen and (max-width: 910px) {
   .header {
     padding-left: 27px;
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .header {
+    justify-content: center;
   }
 }
 @media screen and (max-width: 550px) {

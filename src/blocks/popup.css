@@ -34,6 +34,7 @@
 .popup__container-img {
   position: relative;
   margin-top: 25px;
+  height: 100vh;
 }
 
 .popup__img {
@@ -104,8 +105,10 @@
 @media screen and (max-width: 550px) {
   .popup__container {
     width: 282px;
+    height: 100vh;
     padding: 25px 22px;
   }
+
   .popup__close {
     top: -45px;
     right: 5px;

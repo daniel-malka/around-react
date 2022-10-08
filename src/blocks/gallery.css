@@ -46,7 +46,7 @@
 @media screen and (max-width: 940px) {
   .gallery {
     padding: 0 14px;
-    grid-template: repeat(3, 1fr) / repeat(2, minmax(282px, 430px));
+    grid-template: repeat(3, 1fr) / repeat(2, minmax(282px, 380px));
     row-gap: 16px;
   }
   .gallery__img {
