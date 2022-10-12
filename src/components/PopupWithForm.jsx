@@ -9,7 +9,9 @@ function PopupWithForm({
   children,
 }) {
   return (
-    <div className={`popup popup__type_${name} ${isOpen ? "popup_open" : ""}`}>
+    <div
+      className={`popup popup__container-${name} ${isOpen ? "popup_open" : ""}`}
+    >
       <div className="popup__container">
         <button
           type="button"

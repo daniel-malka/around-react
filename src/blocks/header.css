@@ -1,7 +1,7 @@
 .header {
   box-sizing: border-box;
   max-width: 880px;
-  display: flex;
+  align-self: flex-start;
   margin-bottom: 40px;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
@@ -17,9 +17,9 @@
   }
 }
 
-@media screen and (max-width: 830px) {
+@media screen and (max-width: 620px) {
   .header {
-    justify-content: center;
+    align-self: center;
   }
 }
 @media screen and (max-width: 550px) {
