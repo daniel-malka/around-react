@@ -107,7 +107,7 @@ function App() {
 
       <PopupWithForm
         title="New Place"
-        name="img"
+        name="img-add"
         isOpen={isAddCardOpen}
         onClose={closeAllPopups}
       >
