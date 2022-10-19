@@ -1,48 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
-import PopupWithImage from "./PopupWithImage";
-import "../blocks/root.css";
-import "../blocks/page.css";
-import "../blocks/popup.css";
-import "../blocks/zoom.css";
-
-import "../blocks/desc.css";
-import "../blocks/top.css";
-import "../blocks/text.css";
-
-import "../blocks/header.css";
-import "../blocks/content.css";
-
-import "../blocks/form.css";
-import "../blocks/footer.css";
+import ImagePopup from "./ImagePopup";
+import api from "../utils/api";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
+import DeletePopupForm from "./DeletePopupForm";
 
 function App() {
-  const [isEditProfileOpen, setIsEditProfileOpen] = React.useState(false);
-  const [isAddCardOpen, setIsAddCardOpen] = React.useState(false);
-  const [isEditAvatarOpen, setIsEditAvatarOpen] = React.useState(false);
-  const [isImgViewOpen, setIsImgViewOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({
+  const [currentUser, setCurrentUser] = useState({});
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isImagePreviewOpen, setIsImagePreviewOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({
     name: "",
     link: "",
   });
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [cards, setCards] = useState([]);
 
-  function handleEditProfileClick() {
-    setIsEditProfileOpen(true);
-  }
+  useEffect(() => {
+    api
+      .getUserInfo()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch(console.log);
+  }, []);
 
-  function handleAddCardClick() {
-    setIsAddCardOpen(true);
-  }
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch(console.log);
+  }, []);
 
   function handleEditAvatarClick() {
-    setIsEditAvatarOpen(true);
+    setIsEditAvatarPopupOpen(true);
+  }
+
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
   }
 
   function handleCardClick(card) {
-    setIsImgViewOpen(true);
+    setIsImagePreviewOpen(true);
     setSelectedCard({
       name: card.name,
       link: card.link,
@@ -50,133 +62,123 @@ function App() {
   }
 
   function closeAllPopups() {
-    setIsEditProfileOpen(false);
-    setIsAddCardOpen(false);
-    setIsEditAvatarOpen(false);
-    setIsImgViewOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsImagePreviewOpen(false);
+    setIsDeletePopupOpen(false);
+  }
+
+  function handleDeleteClick(card) {
+    setIsDeletePopupOpen(true);
+    setSelectedCard(card);
+  }
+
+  function handleUpdateUser({ name, about }) {
+    api
+      .setUserInfo({ name, about })
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch(console.log);
+  }
+
+  function handleUpdateAvatar(avatar) {
+    api
+      .setUserAvatar(avatar)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch(console.log);
+  }
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((user) => user._id === currentUser._id);
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        setCards((cards) =>
+          cards.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard
+          )
+        );
+      })
+
+      .catch(console.log);
+  }
+
+  function handleCardDelete(e) {
+    e.preventDefault();
+    api
+      .deleteCard(selectedCard._id)
+      .then(() => {
+        setCards((cards) =>
+          cards.filter((currentCard) => currentCard._id !== selectedCard._id)
+        );
+        closeAllPopups();
+      })
+      .catch(console.log);
+  }
+
+  function handleAddPlaceSubmit(card) {
+    api
+      .createCard(card)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch(console.log);
   }
 
   return (
-    <div className="page">
-      <Header />
-      <Main
-        onEditProfileClick={handleEditProfileClick}
-        onAddCardClick={handleAddCardClick}
-        onEditAvatarClick={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-      />
-      <Footer />
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="App">
+        <Header />
+        <Main
+          cards={cards}
+          onEditProfileClick={handleEditProfileClick}
+          onAddPlaceClick={handleAddPlaceClick}
+          onEditAvatarClick={handleEditAvatarClick}
+          onCardClick={handleCardClick}
+          onDeleteClick={handleDeleteClick}
+          onCardLike={handleCardLike}
+        />
+        <Footer />
 
-      <PopupWithForm
-        title="Edit Profile"
-        name="edit"
-        isOpen={isEditProfileOpen}
-        onClose={closeAllPopups}
-      >
-        <fieldset className="fieldset">
-          <div className="fieldset__container">
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Name"
-              defaultValue=""
-              className="fieldset__input fieldset__input_type_name"
-              minLength={2}
-              maxLength={40}
-              required
-            />
-            <span className="fieldset__error-message fieldset__error-type-name" />
-          </div>
-          <div className="fieldset__container">
-            <input
-              type="text"
-              id="about"
-              name="about"
-              placeholder="about"
-              defaultValue=""
-              className="fieldset__input fieldset__input_type_about"
-              minLength={2}
-              maxLength={200}
-              required
-            />
-            <span className="fieldset__error-message fieldset__error-type-about" />
-          </div>
-        </fieldset>
-      </PopupWithForm>
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onUpdateUser={handleUpdateUser}
+          onClose={closeAllPopups}
+        />
 
-      <PopupWithForm
-        title="New Place"
-        name="img-add"
-        isOpen={isAddCardOpen}
-        onClose={closeAllPopups}
-      >
-        <fieldset className="fieldset">
-          <div className="fieldset__container">
-            <input
-              type="text"
-              id="title"
-              name="title"
-              defaultValue
-              placeholder="Title"
-              className="fieldset__input fieldset__input_type-title"
-              minLength={1}
-              maxLength={30}
-              required
-            />
-            <span className="fieldset__error-message fieldset__error-type-title" />
-          </div>
-          <div className="fieldset__container">
-            <input
-              type="link"
-              id="link"
-              name="link"
-              defaultValue
-              placeholder="Link"
-              className="fieldset__input fieldset__input_type_link"
-              required
-            />
-            <span className="fieldset__error-message fieldset__error-type-link" />
-          </div>
-        </fieldset>
-      </PopupWithForm>
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onAddPlaceSubmit={handleAddPlaceSubmit}
+          onClose={closeAllPopups}
+        />
 
-      <PopupWithForm
-        title="Are you sure?"
-        onClose={closeAllPopups}
-        name="delete"
-        buttonText="Delete"
-      />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onUpdateAvatar={handleUpdateAvatar}
+          onClose={closeAllPopups}
+        />
 
-      <PopupWithForm
-        title="Change profile picture"
-        name="avatar"
-        buttonText="Create"
-        isOpen={isEditAvatarOpen}
-        onClose={closeAllPopups}
-      >
-        <fieldset className="fieldset">
-          <div className="fieldset__container">
-            <input
-              type="url"
-              id="url"
-              name="link"
-              defaultValue
-              placeholder="picture"
-              className="fieldset__input fieldset__input_type-link"
-              required
-            />
-            <span className="fieldset__error-message fieldset__error-type-link" />
-          </div>
-        </fieldset>
-      </PopupWithForm>
+        <DeletePopupForm
+          isOpen={isDeletePopupOpen}
+          onSubmit={handleCardDelete}
+          onClose={closeAllPopups}
+        />
 
-      <PopupWithImage
-        card={selectedCard}
-        isOpen={isImgViewOpen}
-        onClose={closeAllPopups}
-      />
-    </div>
+        <ImagePopup
+          card={selectedCard}
+          isOpen={isImagePreviewOpen}
+          onClose={closeAllPopups}
+        />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
+
 export default App;

@@ -43,6 +43,9 @@
   cursor: pointer;
   opacity: 0.6;
 }
+.gallery__bin_disabled {
+  visibility: hidden;
+}
 @media screen and (max-width: 940px) {
   .gallery {
     padding: 0 14px;
