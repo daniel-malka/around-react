@@ -27,8 +27,7 @@ function EditAvatarPopup({ isOpen, onUpdateAvatar, onClose }) {
       <div className="form__control form__control-avatar">
         <input
           type="url"
-          className="form__input form__input_type_avatar-link"
-          id="avatar-link"
+          className="fieldset__input fieldset__input_type_avatar"
           name="link"
           placeholder="Image link"
           required

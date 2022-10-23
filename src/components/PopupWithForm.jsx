@@ -4,6 +4,7 @@ function PopupWithForm({
   title,
   name,
   isOpen,
+  onSubmit,
   buttonText = "Save",
   onClose,
   children,
@@ -19,7 +20,7 @@ function PopupWithForm({
           onClick={onClose}
         ></button>
         <h3 className="popup__caption">{title}</h3>
-        <form className="form" name={name}>
+        <form className="form" onSubmit={onSubmit} name={name}>
           {children}
           <button
             type="submit"

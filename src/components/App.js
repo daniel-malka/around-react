@@ -1,60 +1,97 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import ImagePopup from "./ImagePopup";
-import api from "../utils/api";
-import CurrentUserContext from "../contexts/CurrentUserContext";
-import EditProfilePopup from "./EditProfilePopup";
+import PopupWithForm from "./PopupWithForm";
+import PopupWithImage from "./PopupWithImage";
+import DeletePopupForm from "./DeletePopupForm";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import DeletePopupForm from "./DeletePopupForm";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import api from "../utils/Api";
+
+import "../blocks/root.css";
+import "../blocks/page.css";
+import "../blocks/popup.css";
+import "../blocks/zoom.css";
+
+import "../blocks/desc.css";
+import "../blocks/top.css";
+import "../blocks/text.css";
+
+import "../blocks/header.css";
+import "../blocks/content.css";
+
+import "../blocks/form.css";
+import "../blocks/footer.css";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isEditProfileOpen, setIsEditProfileOpen] = React.useState(false);
+  const [isAddCardOpen, setIsAddCardOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isImagePreviewOpen, setIsImagePreviewOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({
+  const [isEditAvatarOpen, setIsEditAvatarOpen] = React.useState(false);
+  const [isImgViewOpen, setIsImgViewOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({
     name: "",
     link: "",
   });
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [cards, setCards] = useState([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     api
       .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
+      .then((user) => {
+        setCurrentUser(user);
       })
-      .catch(console.log);
+      .catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     api
-      .getInitialCards()
+      .getCards()
       .then((res) => {
         setCards(res);
       })
-      .catch(console.log);
+      .catch((err) => console.log(err));
   }, []);
 
+  function handleCardLike(card) {
+    // Check one more time if this card was already liked
+    const isLiked = card.likes.some((user) => user._id === currentUser._id);
+
+    if (isLiked) {
+      api.dislikeCard(card).then((likedCard) => {
+        const newCards = cards.map((card) => {
+          return card._id == likedCard._id ? likedCard : card;
+        });
+        setCards(newCards);
+      });
+    } else {
+      api.likeCard(card._id).then((likedCard) => {
+        const newCards = cards.map((card) => {
+          return card._id == likedCard._id ? likedCard : card;
+        });
+        setCards(newCards);
+      });
+    }
+  }
+
   function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(true);
+    setIsEditAvatarOpen(true);
   }
-
   function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(true);
+    setIsEditProfileOpen(true);
   }
 
-  function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true);
+  function handleAddCardClick() {
+    setIsAddCardOpen(true);
   }
 
   function handleCardClick(card) {
-    setIsImagePreviewOpen(true);
+    setIsImgViewOpen(true);
     setSelectedCard({
       name: card.name,
       link: card.link,
@@ -62,16 +99,52 @@ function App() {
   }
 
   function closeAllPopups() {
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setIsEditProfilePopupOpen(false);
-    setIsImagePreviewOpen(false);
-    setIsDeletePopupOpen(false);
+    setIsEditProfileOpen(false);
+    setIsAddCardOpen(false);
+    setIsEditAvatarOpen(false);
+    setIsImgViewOpen(false);
   }
 
-  function handleDeleteClick(card) {
-    setIsDeletePopupOpen(true);
-    setSelectedCard(card);
+  function handleCardDelete(cardId) {
+    api
+      .deleteCard(cardId)
+      .then((res) => {
+        const newCards = cards.filter(
+          (currentCard) => currentCard._id !== selectedCard._id
+        );
+        setCards(newCards);
+        closeAllPopups();
+      })
+      .catch(console.log);
+  }
+
+  function handleUpdateAvatar(avatar) {
+    api
+      .editAvatar(avatar)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch(console.log);
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  }
+
+  function handleAddPlaceSubmit(card) {
+    console.log(card);
+    const formData = new FormData(card.target);
+    const name = formData.get("title");
+    const link = formData.get("link");
+
+    api
+      .addCard({ name, link })
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch(console.log);
   }
 
   function handleUpdateUser({ name, about }) {
@@ -84,83 +157,96 @@ function App() {
       .catch(console.log);
   }
 
-  function handleUpdateAvatar(avatar) {
-    api
-      .setUserAvatar(avatar)
-      .then((data) => {
-        setCurrentUser(data);
-        closeAllPopups();
-      })
-      .catch(console.log);
-  }
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((user) => user._id === currentUser._id);
-    api
-      .changeLikeCardStatus(card._id, isLiked)
-      .then((newCard) => {
-        setCards((cards) =>
-          cards.map((currentCard) =>
-            currentCard._id === card._id ? newCard : currentCard
-          )
-        );
-      })
-
-      .catch(console.log);
-  }
-
-  function handleCardDelete(e) {
-    e.preventDefault();
-    api
-      .deleteCard(selectedCard._id)
-      .then(() => {
-        setCards((cards) =>
-          cards.filter((currentCard) => currentCard._id !== selectedCard._id)
-        );
-        closeAllPopups();
-      })
-      .catch(console.log);
-  }
-
-  function handleAddPlaceSubmit(card) {
-    api
-      .createCard(card)
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
-        closeAllPopups();
-      })
-      .catch(console.log);
-  }
-
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className="App">
+    <div className="page">
+      <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Main
           cards={cards}
           onEditProfileClick={handleEditProfileClick}
-          onAddPlaceClick={handleAddPlaceClick}
+          onAddCardClick={handleAddCardClick}
           onEditAvatarClick={handleEditAvatarClick}
           onCardClick={handleCardClick}
-          onDeleteClick={handleDeleteClick}
+          onCardDelete={handleCardDelete}
           onCardLike={handleCardLike}
         />
         <Footer />
 
         <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onUpdateUser={handleUpdateUser}
+          title="Edit Profile"
+          name="edit"
+          isOpen={isEditProfileOpen}
           onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
         />
 
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onAddPlaceSubmit={handleAddPlaceSubmit}
+        <PopupWithForm
+          title="New Place"
+          name="img-add"
+          isOpen={isAddCardOpen}
           onClose={closeAllPopups}
+          onSubmit={handleAddPlaceSubmit}
+        >
+          <fieldset className="fieldset">
+            <div className="fieldset__container">
+              <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Title"
+                className="fieldset__input fieldset__input_type-title"
+                minLength={1}
+                maxLength={30}
+                required
+              />
+              <span className="fieldset__error-message fieldset__error-type-title" />
+            </div>
+            <div className="fieldset__container">
+              <input
+                type="link"
+                id="link"
+                name="link"
+                placeholder="Link"
+                className="fieldset__input fieldset__input_type_link"
+                required
+              />
+              <span className="fieldset__error-message fieldset__error-type-link" />
+            </div>
+          </fieldset>
+        </PopupWithForm>
+
+        <PopupWithForm
+          title="Are you sure?"
+          onClose={closeAllPopups}
+          name="delete"
+          buttonText="Delete"
         />
+
+        <PopupWithForm
+          title="Change profile picture"
+          name="avatar"
+          buttonText="Create"
+          isOpen={isEditAvatarOpen}
+          onClose={closeAllPopups}
+        >
+          <fieldset className="fieldset">
+            <div className="fieldset__container">
+              <input
+                type="url"
+                id="url"
+                name="link"
+                defaultValue
+                placeholder="picture"
+                className="fieldset__input fieldset__input_type-link"
+                required
+              />
+              <span className="fieldset__error-message fieldset__error-type-link" />
+            </div>
+          </fieldset>
+        </PopupWithForm>
 
         <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
+          isOpen={isEditAvatarOpen}
           onUpdateAvatar={handleUpdateAvatar}
           onClose={closeAllPopups}
         />
@@ -171,14 +257,13 @@ function App() {
           onClose={closeAllPopups}
         />
 
-        <ImagePopup
+        <PopupWithImage
           card={selectedCard}
-          isOpen={isImagePreviewOpen}
+          isOpen={isImgViewOpen}
           onClose={closeAllPopups}
         />
-      </div>
-    </CurrentUserContext.Provider>
+      </CurrentUserContext.Provider>
+    </div>
   );
 }
-
 export default App;

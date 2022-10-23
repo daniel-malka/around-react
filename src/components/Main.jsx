@@ -1,77 +1,73 @@
 import React from "react";
+import api from "../utils/Api";
 import Card from "./Card";
-import pen from "../images/Vector_pen.svg";
-import plus from "../images/Vector_plus.svg";
+
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
+import "../blocks/images.css";
+import "../blocks/popup.css";
+import "../blocks/gallery.css";
+import "../blocks/zoom.css";
 function Main({
   cards,
   onEditProfileClick,
-  onAddPlaceClick,
-  onEditAvatarClick,
   onCardClick,
+  onEditAvatarClick,
+  onAddCardClick,
   onCardLike,
-  onDeleteClick,
+  onCardDelete,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
 
+
+
   return (
     <main className="content">
-      <section className="profile">
-        <div className="profile__avatar" onClick={onEditAvatarClick}>
-          <div className="profile__avatar-image">
-            {currentUser.avatar && (
-              <img
-                src={currentUser.avatar}
-                alt="User's Profile"
-                className="profile__image"
-              />
-            )}
-          </div>
-          <div className="profile__avatar-overlay"></div>
+      <section className="top">
+        <div className="top__container" onClick={onEditAvatarClick}>
+          <img
+            src={currentUser.avatar}
+            alt="Profile picture"
+            className="top__img"
+          />
         </div>
-        <div className="profile__info">
-          <div className="profile__title">
-            <h1 className="profile__title-name">{currentUser.name}</h1>
+
+        <div className="text">
+          <div className="text__title">
+            <h1 className="text__name">{currentUser.name}</h1>
             <button
-              className="profile__open-button"
               type="button"
+              aria-label="button"
               onClick={onEditProfileClick}
-            >
-              <img
-                src={pen}
-                alt="icon of a pen"
-                className="profile__open-icon"
-              />
-            </button>
-          </div>
-          <p className="profile__subtitle-job">{currentUser.about}</p>
-        </div>
-        <button
-          className="profile__add-button"
-          type="button"
-          onClick={onAddPlaceClick}
-        >
-          {" "}
-          <img src={plus} alt="icon of a plus" className="profile__add-icon" />
-        </button>
-      </section>
-      <section className="elements">
-        <ul className="elements__list">
-          {cards.map((card) => (
-            <Card
-              card={card}
-              key={card._id}
-              onCardClick={onCardClick}
-              onCardLike={onCardLike}
-              onDeleteClick={onDeleteClick}
+              className="text__edit"
             />
-          ))}
-          ;
+          </div>
+          <p className="text__about">{currentUser.about}</p>
+        </div>
+
+        <button
+          type="button"
+          aria-label="button"
+          className="top__plus-box"
+          onClick={onAddCardClick}
+        />
+      </section>
+      <section className="images">
+        <ul className="gallery">
+          {cards.map((card) => {
+            return (
+              <Card
+                key={card._id}
+                card={card}
+                onCardClick={onCardClick}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
+              />
+            );
+          })}
         </ul>
       </section>
     </main>
   );
 }
-
 export default Main;
