@@ -24,7 +24,7 @@ const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
 
   const isLikedByUser = card.likes.some((user) => user._id === currentUser._id);
   const cardLikeButtonClassName = `like__button ${
-    isLikedByUser ? "button_liked" : "button_liked"
+    isLikedByUser ? "button_liked" : ""
   }`;
 
   return (
@@ -43,7 +43,7 @@ const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
             type="button"
             aria-label="button"
             id="like__button"
-            className="like__button"
+            className={cardLikeButtonClassName}
             onClick={handleLikeClick}
           />
           <p className="like__counter">{card.likes.length}</p>

@@ -27,8 +27,8 @@ function EditProfilePopup({ isOpen, onUpdateUser, onClose }) {
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateUser({
-      name: name,
-      about: about,
+      name,
+      about,
     });
   }
 
@@ -48,7 +48,7 @@ function EditProfilePopup({ isOpen, onUpdateUser, onClose }) {
             id="name"
             name="name"
             placeholder="Name"
-            value={name || ""}
+            value={name}
             className="fieldset__input fieldset__input_type_name"
             minLength={2}
             maxLength={40}

@@ -25,8 +25,8 @@ class Api {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({
-        name: name,
-        about: about,
+        name,
+        about,
       }),
     });
   }
@@ -36,8 +36,8 @@ class Api {
       headers: this._headers,
       method: "POST",
       body: JSON.stringify({
-        name: name,
-        link: link,
+        name,
+        link,
       }),
     });
   }
@@ -46,7 +46,7 @@ class Api {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({
-        avatar: avatar,
+        avatar,
       }),
     });
   }

@@ -63,7 +63,7 @@ function App() {
     const isLiked = card.likes.some((user) => user._id === currentUser._id);
 
     if (isLiked) {
-      api.dislikeCard(card).then((likedCard) => {
+      api.dislikeCard(card._id).then((likedCard) => {
         const newCards = cards.map((card) => {
           return card._id == likedCard._id ? likedCard : card;
         });
@@ -109,6 +109,7 @@ function App() {
     api
       .deleteCard(cardId)
       .then((res) => {
+        console.log(res);
         const newCards = cards.filter(
           (currentCard) => currentCard._id !== selectedCard._id
         );
@@ -151,10 +152,11 @@ function App() {
     api
       .setUserInfo({ name, about })
       .then((data) => {
+        console.log(data);
         setCurrentUser(data);
         closeAllPopups();
       })
-      .catch(console.log);
+      .catch((err) => console.log(err));
   }
 
   return (
