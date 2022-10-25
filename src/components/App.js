@@ -134,7 +134,6 @@ function App() {
   }
 
   function handleAddPlaceSubmit(card) {
-    console.log(card);
     const formData = new FormData(card.target);
     const name = formData.get("title");
     const link = formData.get("link");
@@ -152,7 +151,6 @@ function App() {
     api
       .setUserInfo({ name, about })
       .then((data) => {
-        console.log(data);
         setCurrentUser(data);
         closeAllPopups();
       })

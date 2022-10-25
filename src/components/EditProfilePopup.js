@@ -13,7 +13,7 @@ function EditProfilePopup({ isOpen, onUpdateUser, onClose }) {
     setName(e.target.value);
   }
 
-  function handleDescriptionChange(e) {
+  function handleAboutChange(e) {
     setAbout(e.target.value);
   }
 
@@ -53,6 +53,7 @@ function EditProfilePopup({ isOpen, onUpdateUser, onClose }) {
             minLength={2}
             maxLength={40}
             required
+            onChange={handleNameChange}
           />
           <span className="fieldset__error-message fieldset__error-type-name" />
         </div>
@@ -67,6 +68,7 @@ function EditProfilePopup({ isOpen, onUpdateUser, onClose }) {
             minLength={2}
             maxLength={200}
             required
+            onChange={handleAboutChange}
           />
           <span className="fieldset__error-message fieldset__error-type-about" />
         </div>
