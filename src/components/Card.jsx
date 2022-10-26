@@ -12,7 +12,7 @@ const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
   }
 
   function handleCardDelete() {
-    onCardDelete(card._id);
+    onCardDelete(card);
   }
 
   const currentUser = React.useContext(CurrentUserContext);

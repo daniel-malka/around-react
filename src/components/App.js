@@ -101,6 +101,7 @@ function App() {
     setIsAddCardOpen(false);
     setIsEditAvatarOpen(false);
     setIsImgViewOpen(false);
+    setIsDeletePopupOpen(false);
   }
   function handleDeleteClick(card) {
     setIsDeletePopupOpen(true);
@@ -112,9 +113,10 @@ function App() {
     api
       .deleteCard(selectedCard._id)
       .then(() => {
-        setCards(cards);
-        cards.filter((currentCard) => currentCard._id === selectedCard._id);
-
+        const newCards = cards.filter(
+          (currentCard) => currentCard._id !== selectedCard._id
+        );
+        setCards(newCards);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
@@ -211,36 +213,6 @@ function App() {
             </div>
           </fieldset>
         </PopupWithForm>
-
-        {/* <PopupWithForm
-          title="Are you sure?"
-          onClose={closeAllPopups}
-          name="delete"
-          buttonText="Delete"
-        /> */}
-
-        {/* <PopupWithForm
-          title="Change profile picture"
-          name="avatar"
-          buttonText="Create"
-          isOpen={isEditAvatarOpen}
-          onClose={closeAllPopups}
-        >
-          <fieldset className="fieldset">
-            <div className="fieldset__container">
-              <input
-                type="url"
-                id="url"
-                name="link"
-                defaultValue
-                placeholder="picture"
-                className="fieldset__input fieldset__input_type-link"
-                required
-              />
-              <span className="fieldset__error-message fieldset__error-type-link" />
-            </div>
-          </fieldset>
-        </PopupWithForm> */}
 
         <EditAvatarPopup
           isOpen={isEditAvatarOpen}
