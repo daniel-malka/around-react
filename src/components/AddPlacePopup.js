@@ -13,17 +13,27 @@ function AddPlacePopup({ isOpen, onAddPlaceSubmit, onClose }) {
   function handleNameChange(e) {
     setName(e.target.value);
   }
-
-  function handleLinkChange(e) {
-    setLink(e.target.value);
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
     onAddPlaceSubmit({
       name,
       link,
     });
+  }
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleEnterSumbit);
+  });
+
+  function handleEnterSumbit(e) {
+    if (e.key === "Enter") handleSubmit(e);
+
+    return () => {
+      document.removeEventListener("keydown", handleEnterSumbit);
+    };
+  }
+  function handleLinkChange(e) {
+    setLink(e.target.value);
   }
 
   return (
@@ -35,32 +45,31 @@ function AddPlacePopup({ isOpen, onAddPlaceSubmit, onClose }) {
       name="add-place"
       buttonText="Create"
     >
-      <div className="form__control">
+      {" "}
+      <div className="fieldset__container">
         <input
           type="text"
-          className="form__input form__input_type_card-title"
-          id="card-title"
-          name="name"
+          id="title"
+          name="title"
           placeholder="Title"
+          className="fieldset__input fieldset__input_type-title"
+          minLength={1}
+          maxLength={30}
           required
-          minLength="1"
-          maxLength="30"
-          value={name}
-          onChange={handleNameChange}
         />
-        <span id="card-title-error" className="popup__error"></span>
+        <span className="fieldset__error-message fieldset__error-type-title" />
       </div>
-      <input
-        type="url"
-        className="form__input form__input_type_card-link"
-        id="card-link"
-        name="link"
-        placeholder="Image link"
-        required
-        value={link}
-        onChange={handleLinkChange}
-      />
-      <span id="card-link-error" className="popup__error"></span>
+      <div className="fieldset__container">
+        <input
+          type="link"
+          id="link"
+          name="link"
+          placeholder="Link"
+          className="fieldset__input fieldset__input_type_link"
+          required
+        />
+        <span className="fieldset__error-message fieldset__error-type-link" />
+      </div>
     </PopupWithForm>
   );
 }

@@ -8,7 +8,7 @@ function DeletePopupForm({ isOpen, onSubmit, onClose }) {
       onSubmit={onSubmit}
       onClose={onClose}
       title="Are you sure?"
-      name="delete-form"
+      name="delete"
       buttonText="Yes"
     />
   );

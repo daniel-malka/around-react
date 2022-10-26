@@ -6,7 +6,6 @@ import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 import DeletePopupForm from "./DeletePopupForm";
 import EditAvatarPopup from "./EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import api from "../utils/Api";
 
@@ -30,7 +29,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isEditProfileOpen, setIsEditProfileOpen] = React.useState(false);
   const [isAddCardOpen, setIsAddCardOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarOpen, setIsEditAvatarOpen] = React.useState(false);
   const [isImgViewOpen, setIsImgViewOpen] = useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
@@ -104,19 +102,22 @@ function App() {
     setIsEditAvatarOpen(false);
     setIsImgViewOpen(false);
   }
+  function handleDeleteClick(card) {
+    setIsDeletePopupOpen(true);
+    setSelectedCard(card);
+  }
+  function handleCardDelete(e) {
+    e.preventDefault();
 
-  function handleCardDelete(cardId) {
     api
-      .deleteCard(cardId)
-      .then((res) => {
-        console.log(res);
-        const newCards = cards.filter(
-          (currentCard) => currentCard._id !== selectedCard._id
-        );
-        setCards(newCards);
+      .deleteCard(selectedCard._id)
+      .then(() => {
+        setCards(cards);
+        cards.filter((currentCard) => currentCard._id === selectedCard._id);
+
         closeAllPopups();
       })
-      .catch(console.log);
+      .catch((err) => console.log(err));
   }
 
   function handleUpdateAvatar(avatar) {
@@ -127,10 +128,6 @@ function App() {
         closeAllPopups();
       })
       .catch(console.log);
-  }
-
-  function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true);
   }
 
   function handleAddPlaceSubmit(card) {
@@ -144,7 +141,7 @@ function App() {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch(console.log);
+      .catch((err) => console.log(err));
   }
 
   function handleUpdateUser({ name, about }) {
@@ -167,7 +164,7 @@ function App() {
           onAddCardClick={handleAddCardClick}
           onEditAvatarClick={handleEditAvatarClick}
           onCardClick={handleCardClick}
-          onCardDelete={handleCardDelete}
+          onCardDelete={handleDeleteClick}
           onCardLike={handleCardLike}
         />
         <Footer />
@@ -215,14 +212,14 @@ function App() {
           </fieldset>
         </PopupWithForm>
 
-        <PopupWithForm
+        {/* <PopupWithForm
           title="Are you sure?"
           onClose={closeAllPopups}
           name="delete"
           buttonText="Delete"
-        />
+        /> */}
 
-        <PopupWithForm
+        {/* <PopupWithForm
           title="Change profile picture"
           name="avatar"
           buttonText="Create"
@@ -243,7 +240,7 @@ function App() {
               <span className="fieldset__error-message fieldset__error-type-link" />
             </div>
           </fieldset>
-        </PopupWithForm>
+        </PopupWithForm> */}
 
         <EditAvatarPopup
           isOpen={isEditAvatarOpen}

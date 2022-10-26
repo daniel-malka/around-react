@@ -18,6 +18,9 @@
   visibility: visible;
   opacity: 1;
 }
+.popup__container-delete-form {
+  min-height: 210px;
+}
 .popup__container {
   position: relative;
   box-sizing: border-box;
