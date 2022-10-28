@@ -8,7 +8,7 @@ import DeletePopupForm from "./DeletePopupForm";
 import EditAvatarPopup from "./EditAvatarPopup";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import api from "../utils/Api";
-
+// last project tutor sujested me to do this beacuse it causes errors on project validation
 import "../blocks/root.css";
 import "../blocks/page.css";
 import "../blocks/popup.css";
@@ -63,14 +63,14 @@ function App() {
     if (isLiked) {
       api.dislikeCard(card._id).then((likedCard) => {
         const newCards = cards.map((card) => {
-          return card._id == likedCard._id ? likedCard : card;
+          return card._id === likedCard._id ? likedCard : card;
         });
         setCards(newCards);
       });
     } else {
       api.likeCard(card._id).then((likedCard) => {
         const newCards = cards.map((card) => {
-          return card._id == likedCard._id ? likedCard : card;
+          return card._id === likedCard._id ? likedCard : card;
         });
         setCards(newCards);
       });

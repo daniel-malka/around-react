@@ -18,9 +18,7 @@
   visibility: visible;
   opacity: 1;
 }
-.popup__container-delete-form {
-  min-height: 210px;
-}
+
 .popup__container {
   position: relative;
   box-sizing: border-box;
@@ -29,10 +27,12 @@
   padding: 34px 36px 36px 36px;
   margin-top: 25px;
   width: 430px;
-  min-height: 330px;
+  min-height: 200px;
   background-color: #fff;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
+}
+.popup__container-delete {
 }
 .popup__container-img {
   position: relative;
