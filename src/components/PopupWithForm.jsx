@@ -19,7 +19,7 @@ function PopupWithForm({
           className="popup__close"
           onClick={onClose}
         ></button>
-        <h3 className="popup__caption">{title}</h3>
+        <h3 className={`popup__caption popup__caption-${name}`}>{title}</h3>
         <form className="form" onSubmit={onSubmit} name={name}>
           {children}
           <button

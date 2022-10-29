@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
+import AddPlacePopup from "./AddPlacePopup";
 import PopupWithImage from "./PopupWithImage";
 import DeletePopupForm from "./DeletePopupForm";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -134,7 +134,7 @@ function App() {
 
   function handleAddPlaceSubmit(card) {
     const formData = new FormData(card.target);
-    const name = formData.get("title");
+    const name = formData.get("name");
     const link = formData.get("link");
 
     api
@@ -179,14 +179,14 @@ function App() {
           onUpdateUser={handleUpdateUser}
         />
 
-        <PopupWithForm
+        <AddPlacePopup
           title="New Place"
           name="img-add"
           isOpen={isAddCardOpen}
           onClose={closeAllPopups}
           onSubmit={handleAddPlaceSubmit}
         >
-          <fieldset className="fieldset">
+          {/* <fieldset className="fieldset">
             <div className="fieldset__container">
               <input
                 type="text"
@@ -211,8 +211,8 @@ function App() {
               />
               <span className="fieldset__error-message fieldset__error-type-link" />
             </div>
-          </fieldset>
-        </PopupWithForm>
+          </fieldset> */}
+        </AddPlacePopup>
 
         <EditAvatarPopup
           isOpen={isEditAvatarOpen}

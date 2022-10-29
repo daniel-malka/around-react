@@ -27,13 +27,12 @@
   padding: 34px 36px 36px 36px;
   margin-top: 25px;
   width: 430px;
-  min-height: 200px;
+  min-height: 230px;
   background-color: #fff;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 }
-.popup__container-delete {
-}
+
 .popup__container-img {
   position: relative;
   margin-top: 25px;
@@ -98,13 +97,20 @@
 
 .popup__caption {
   margin: 0;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 54px;
   color: black;
   font-size: 24px;
   font-weight: 900;
   line-height: 1.2;
   text-align: left;
+}
+.popup__caption-delete {
+  margin-bottom: 38px;
+}
+.popup__caption-img-add {
+}
+.popup__caption-edit-profile {
+  margin-bottom: 54px;
 }
 @media screen and (max-width: 924px) {
   .popup__img {

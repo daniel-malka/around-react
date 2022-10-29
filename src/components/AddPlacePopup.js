@@ -10,9 +10,6 @@ function AddPlacePopup({ isOpen, onAddPlaceSubmit, onClose }) {
     setLink("");
   }, [isOpen]);
 
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
   function handleSubmit(e) {
     e.preventDefault();
     onAddPlaceSubmit({
@@ -45,7 +42,6 @@ function AddPlacePopup({ isOpen, onAddPlaceSubmit, onClose }) {
       name="add-place"
       buttonText="Create"
     >
-      {" "}
       <div className="fieldset__container">
         <input
           type="text"
