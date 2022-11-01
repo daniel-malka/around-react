@@ -3,4 +3,4 @@ project name: "Around US".
 photo gallery of most visited outdoor places in United states
 this website uses html, css, and javascript.
 
-Link ---> https://daniel-malka.github.io/web_project_4/
+Link ---> https://daniel-malka.github.io/around-react/
