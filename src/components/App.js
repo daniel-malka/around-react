@@ -6,6 +6,7 @@ import AddPlacePopup from "./AddPlacePopup";
 import PopupWithImage from "./PopupWithImage";
 import DeletePopupForm from "./DeletePopupForm";
 import EditAvatarPopup from "./EditAvatarPopup";
+import EditProfilePopup from "./EditProfilePopup";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import api from "../utils/Api";
 // last project tutor sujested me to do this beacuse it causes errors on project validation
@@ -23,7 +24,6 @@ import "../blocks/content.css";
 
 import "../blocks/form.css";
 import "../blocks/footer.css";
-import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -133,12 +133,9 @@ function App() {
   }
 
   function handleAddPlaceSubmit(card) {
-    const formData = new FormData(card.target);
-    const name = formData.get("name");
-    const link = formData.get("link");
-
+    console.log(card);
     api
-      .addCard({ name, link })
+      .addCard(card)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
@@ -185,34 +182,7 @@ function App() {
           isOpen={isAddCardOpen}
           onClose={closeAllPopups}
           onSubmit={handleAddPlaceSubmit}
-        >
-          {/* <fieldset className="fieldset">
-            <div className="fieldset__container">
-              <input
-                type="text"
-                id="title"
-                name="title"
-                placeholder="Title"
-                className="fieldset__input fieldset__input_type-title"
-                minLength={1}
-                maxLength={30}
-                required
-              />
-              <span className="fieldset__error-message fieldset__error-type-title" />
-            </div>
-            <div className="fieldset__container">
-              <input
-                type="link"
-                id="link"
-                name="link"
-                placeholder="Link"
-                className="fieldset__input fieldset__input_type_link"
-                required
-              />
-              <span className="fieldset__error-message fieldset__error-type-link" />
-            </div>
-          </fieldset> */}
-        </AddPlacePopup>
+        />
 
         <EditAvatarPopup
           isOpen={isEditAvatarOpen}
