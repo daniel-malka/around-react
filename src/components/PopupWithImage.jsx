@@ -2,9 +2,12 @@ import close from "../images/close-X.svg";
 import "../blocks/popup.css";
 function PopupWithImage(props) {
   return (
-    <div className={`popup popup_type_image  ${props.isOpen && "popup_open"}`}>
+    <div className={`popup popup__img ${props.isOpen && "popup_open"}`}>
       <div className="popup__container-img popup__container_type_image">
-        <span className=" popup__close-button_type_image" type="button">
+        <button
+          className="popup__close popup__close-button_type_image"
+          type="button"
+        >
           <img
             src={close}
             alt=""
@@ -14,7 +17,7 @@ function PopupWithImage(props) {
         </span>
         <figure>
           <img src={props.card.link} alt="#" className="popup__img" />
-          <figcaption className="popup__title">{props.card.name}</figcaption>
+          <figcaption className="popup__caption">{props.name}</figcaption>
         </figure>
       </div>
     </div>

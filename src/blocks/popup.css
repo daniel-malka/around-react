@@ -35,16 +35,18 @@
 
 .popup__container-img {
   position: relative;
+  display: flex;
+  width: 100vw;
+  top: 50px;
   margin-top: 25px;
 }
-
 .popup__img {
   padding-top: 50px;
   background-image: none;
-  background-position: top;
+  background-position: center;
   background-repeat: no-repeat;
-  width: 70vw;
-  height: 70vh;
+  width: 75vw;
+  height: 75vh;
   object-fit: cover;
   box-sizing: border-box;
 }
@@ -107,14 +109,14 @@
 .popup__caption-delete {
   margin-bottom: 38px;
 }
-.popup__caption-img-add {
-}
+
 .popup__caption-edit-profile {
   margin-bottom: 54px;
 }
 @media screen and (max-width: 924px) {
-  .popup__img {
+  .popup__container-img {
     width: 100vw;
+    height: 75%;
     height: 400px;
   }
   .popup__close-img {

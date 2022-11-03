@@ -21,7 +21,7 @@ import "../blocks/text.css";
 
 import "../blocks/header.css";
 import "../blocks/content.css";
-
+import "../blocks/zoom.css";
 import "../blocks/form.css";
 import "../blocks/footer.css";
 
