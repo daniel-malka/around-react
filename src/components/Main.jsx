@@ -7,7 +7,7 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import "../blocks/images.css";
 import "../blocks/popup.css";
 import "../blocks/gallery.css";
-
+import "../blocks/zoom.css";
 function Main({
   cards,
   onEditProfileClick,
@@ -19,25 +19,6 @@ function Main({
 }) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((res) => {
-        setUserName(res.name);
-        setUserDescription(res.about);
-        setUserAvatar(res.avatar);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  React.useEffect(() => {
-    api
-      .getCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
   return (
     <main className="content">
       <section className="top">
